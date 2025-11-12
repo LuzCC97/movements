@@ -20,16 +20,10 @@ public class MovementController {
     }
 
     //anotación para indicar metodo tipo get, que recibe el accouintid como parametro - es la ruta de mi endpoint
+    // ...
     @GetMapping("/{accountId}/movements")
     public ResponseEntity<?> getMovements(@PathVariable String accountId) {
-        MovementListResponse response = movementService.getMovementsByAccount(accountId);
-        if(response == null){
-            String message = "Cuenta ID " + accountId + " no encontrada.";
-            return ResponseEntity
-                    .status(404)
-                    .body(message);
-        }
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(movementService.getMovementsByAccount(accountId));
     }
 }
 

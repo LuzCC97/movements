@@ -8,6 +8,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MovementListResponse {
     private String accountId;
+    private String currency;
     private Double balance;
     private List<MovementDto> movements;
 }
