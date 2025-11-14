@@ -5,7 +5,6 @@ import com.example.movements.movements.entity.Account;
 import com.example.movements.movements.entity.Movement;
 import com.example.movements.movements.exception.ResourceNotFoundException;
 import com.example.movements.movements.mapper.MovementListResponseMapper;
-import com.example.movements.movements.mapper.MovementMapper;
 import com.example.movements.movements.repository.AccountRepository;
 import com.example.movements.movements.repository.MovementRepository;
 import com.example.movements.movements.service.MovementService;

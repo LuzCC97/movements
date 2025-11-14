@@ -81,8 +81,9 @@ class MovementListResponseMapperTest {
     //con account = null y lista vacía, espera NullPointerException.
     @Test
     void toResponse_whenAccountIsNull_throwsNpe() {
-        org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class, () ->
-                mapper.toResponse(null, List.of())
+        List<Movement> empty = List.of();
+        org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class,
+                () -> mapper.toResponse(null, empty)
         );
     }
 

@@ -1,6 +1,7 @@
 package com.example.movements.movements;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class MovementsApplicationTest {
 
@@ -9,6 +10,6 @@ class MovementsApplicationTest {
     //Que el metodo main se ejecuta sin lanzar errores.
     @Test
     void main_runs() {
-        MovementsApplication.main(new String[]{}); // cubre MovementsApplication.java líneas 7–11
+        assertDoesNotThrow(() -> MovementsApplication.main(new String[]{})); // cubre MovementsApplication.java líneas 7–11
     }
 }

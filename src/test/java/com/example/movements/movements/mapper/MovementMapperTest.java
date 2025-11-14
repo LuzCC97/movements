@@ -95,7 +95,6 @@ class MovementMapperTest {
     @Test
     void toDtoList_whenSourceIsEmpty_returnsEmptyList() {
         List<MovementDto> list = mapper.toDtoList(List.of());
-        assertThat(list).isNotNull();
-        assertThat(list).isEmpty();
+        assertThat(list).isNotNull().isEmpty();
     }
 }

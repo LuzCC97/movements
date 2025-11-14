@@ -22,7 +22,7 @@ public class MovementController {
     //anotación para indicar metodo tipo get, que recibe el accouintid como parametro - es la ruta de mi endpoint
     // ...
     @GetMapping("/{accountId}/movements")
-    public ResponseEntity<?> getMovements(@PathVariable String accountId) {
+    public ResponseEntity<MovementListResponse> getMovements(@PathVariable String accountId) {
         return ResponseEntity.ok(movementService.getMovementsByAccount(accountId));
     }
 }
