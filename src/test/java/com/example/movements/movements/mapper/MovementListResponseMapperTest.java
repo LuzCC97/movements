@@ -14,17 +14,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+//para inyectar MovementListResponseMapperImpl y MovementMapperImpl generados por MapStruct.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {
         MovementListResponseMapperImpl.class,
         MovementMapperImpl.class
 })
+//Reglas de mapeo de MovementListResponseMapper, incluidas expresiones null-safe y delegación a MovementMapper.
 class MovementListResponseMapperTest {
 
     @Autowired
     private MovementListResponseMapper mapper;
 
+    //: verifica accountId, currency, conversión de balance BigDecimal -> Double, y mapeo de lista de movimientos.
     @Test
     void toResponse_maps_account_and_movements() {
         Account acc = new Account("ACC-9", "USD", new BigDecimal("250.75"), "ACTIVE");
@@ -40,6 +42,7 @@ class MovementListResponseMapperTest {
         assertThat(resp.getMovements().get(0).getMovementId()).isEqualTo("M1");
     }
 
+    //account.balance = null produce balance = null en respuesta
     @Test
     void toResponse_handles_null_balance() {
         Account acc = new Account("ACC-10", "PEN", null, "ACTIVE");
@@ -48,6 +51,8 @@ class MovementListResponseMapperTest {
 
         assertThat(resp.getBalance()).isNull(); // cubre branch null-safe de la expression en línea 19
     }
+
+    //lista de movimientos null mantiene null y mapea campos de cuenta.
     @Test
     void toResponse_whenMovementsIsNull_setsMovementsNull_andMapsAccountFields() {
         Account acc = new Account("ACC-11", "EUR", new BigDecimal("10.00"), "ACTIVE");
@@ -61,6 +66,7 @@ class MovementListResponseMapperTest {
         assertThat(resp.getMovements()).isNull(); // lista origen null -> destino null
     }
 
+    //lista vacía produce lista vacía en respuesta.
     @Test
     void toResponse_whenMovementsIsEmpty_setsEmptyList() {
         Account acc = new Account("ACC-12", "PEN", new BigDecimal("5.00"), "ACTIVE");
@@ -72,12 +78,15 @@ class MovementListResponseMapperTest {
         assertThat(resp.getMovements()).isEmpty();
     }
 
+    //con account = null y lista vacía, espera NullPointerException.
     @Test
     void toResponse_whenAccountIsNull_throwsNpe() {
         org.junit.jupiter.api.Assertions.assertThrows(NullPointerException.class, () ->
                 mapper.toResponse(null, List.of())
         );
     }
+
+    //ambos null retorna null (cubre rama especial)
     @Test
     void toResponse_whenAccountAndMovementsAreNull_returnsNull() {
         MovementListResponse resp = mapper.toResponse(null, null);

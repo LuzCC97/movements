@@ -19,21 +19,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 //Pruebas del controlador con MockMvc
-//WebMvcTest
-// carga solo la capa web.
-//MockBean
-// para el MovementService.
-//Verificación del payload JSON con jsonPath.
+//Valida: Contrato HTTP del endpoint y manejo de excepciones a través del controlador y el advice global.
 
+//WebMvcTest: carga solo la capa web. Con [MockBean](cci:4://file://MockBean:0:0-0:0) MovementService y MockMvc.
 @WebMvcTest(MovementController.class)
 class MovementControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    //MockBean:para el MovementService.
     @MockBean
     private MovementService movementService;
-
+    //happy path. Mockea el servicio y verifica status 200 y cuerpo JSON (accountId, currency, balance, lista).
     @Test
     void getMovements_returns200_andBody() throws Exception {
         String accountId = "ACC-123";
@@ -58,6 +56,9 @@ class MovementControllerTest {
                 .andExpect(jsonPath("$.movements", hasSize(2)))
                 .andExpect(jsonPath("$.movements[0].movementId", is("MOV-1")));
     }
+
+    // simula ResourceNotFoundException y verifica 404 + cuerpo con error
+    // y message como define el GlobalExceptionHandler.
     @Test
     void getMovements_whenServiceThrowsNotFound_returns404_withBody() throws Exception {
         String accountId = "ACC-404";
@@ -72,6 +73,7 @@ class MovementControllerTest {
                 .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.containsString(accountId)));
     }
 
+    //simula RuntimeException y verifica 500 + cuerpo con error y message.
     @Test
     void getMovements_whenServiceThrowsGeneric_returns500_withBody() throws Exception {
         String accountId = "ACC-500";

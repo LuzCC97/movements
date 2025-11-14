@@ -25,8 +25,13 @@ import static org.mockito.Mockito.*;
 //Mock de repos y mapper; no se levanta Spring.
 //Verificación de interacciones esperadas.
 //Mensaje de excepción alineado con MovementServiceImpl.
-
+//----------------------------------------------------------------
+//mocks de AccountRepository, MovementRepository, MovementListResponseMapper e inyección con
+//InjectMocks
+// del servicio.
 @ExtendWith(MockitoExtension.class)
+//Flujo del servicio: existencia de cuenta, carga de movimientos ordenados,
+// mapeo y manejo de error por cuenta inexistente.
 class MovementServiceImplTest {
 
     @Mock
@@ -41,6 +46,8 @@ class MovementServiceImplTest {
     @InjectMocks
     private MovementServiceImpl service;
 
+    // camino feliz. Mockea repos y mapper, aserta campos del MovementListResponse, y
+    // verifica interacciones esperadas y verifyNoMoreInteractions(...).
     @Test
     void getMovementsByAccount_ok() {
         // given
@@ -98,6 +105,8 @@ class MovementServiceImplTest {
         verifyNoMoreInteractions(accountRepository, movementRepository, movementListResponseMapper);
     }
 
+    //cuando findById devuelve vacío, aserta ResourceNotFoundException
+    // y que no se interactúa con repo de movimientos ni mapper.
     @Test
     void getMovementsByAccount_accountNotFound_throws() {
         // given
