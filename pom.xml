@@ -30,8 +30,10 @@
 		<java.version>17</java.version>
         <sonar.projectKey>movements</sonar.projectKey>
         <sonar.projectName>movements</sonar.projectName>
-        <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-	</properties>
+        <sonar.organization>luzcc97</sonar.organization>
+        <sonar.coverage.jacoco.xmlReportPaths>target/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
