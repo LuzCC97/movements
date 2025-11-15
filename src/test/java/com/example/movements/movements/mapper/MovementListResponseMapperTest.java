@@ -91,7 +91,6 @@ class MovementListResponseMapperTest {
     @Test
     void toResponse_whenAccountAndMovementsAreNull_returnsNull() {
         MovementListResponse resp = mapper.toResponse(null, null);
-        // Cubre la rama: if (account == null && movements == null) return null;
         assertThat(resp).isNull();
     }
 }

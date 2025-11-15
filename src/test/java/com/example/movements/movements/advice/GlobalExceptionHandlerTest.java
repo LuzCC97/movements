@@ -19,11 +19,10 @@ class GlobalExceptionHandlerTest {
         ResponseEntity<Map<String, String>> response = handler.handleNotFound(ex);
 
         assertThat(response.getStatusCode().value()).isEqualTo(404);
-        assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody())
-                .containsEntry("error", "cuenta no encontrada");
-        assertThat(response.getBody().get("message"))
-                .contains("ACC-404");
+                .isNotNull()
+                .containsEntry("error", "cuenta no encontrada")
+                .satisfies(body -> assertThat(body.get("message")).contains("ACC-404"));
     }
 
     @Test
@@ -33,10 +32,9 @@ class GlobalExceptionHandlerTest {
         ResponseEntity<Map<String, String>> response = handler.handleGeneric(ex);
 
         assertThat(response.getStatusCode().value()).isEqualTo(500);
-        assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody())
-                .containsEntry("error", "error interno");
-        assertThat(response.getBody().get("message"))
-                .isEqualTo("boom");
+                .isNotNull()
+                .containsEntry("error", "error interno")
+                .containsEntry("message", "boom");
     }
 }
